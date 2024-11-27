@@ -1,0 +1,43 @@
+<div class="admin-users">
+  <div class="admin-users-header">
+    <button (click)="goToAdmin()" class="btn btn-outline-primary back-btn">Back to Admin Home</button>
+  </div>
+
+  <div *ngIf="staffs.length > 0; else noStaffs">
+    <h1>Staff without an associated user</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let staff of staffs">
+          <td>{{ staff.ContactInformation.Email }}</td>
+          <td>{{ staff.staffRole }}</td>
+          <td>
+            <button (click)="createUser(staff)">Create User</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noStaffs>
+    <div *ngIf="message; else loading">
+      <p>{{ message }}</p>
+    </div>
+  </ng-template>
+
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
+
+  <div class="pagination">
+    <button (click)="changePage(filter.pageNumber - 1)" [disabled]="filter.pageNumber <= 1">Previous</button>
+    <span>Page {{ filter.pageNumber }} of {{ totalPages }}</span>
+    <button (click)="changePage(filter.pageNumber + 1)" [disabled]="filter.pageNumber >= totalPages">Next</button>
+  </div>
+</div>
